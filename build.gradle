@@ -28,6 +28,13 @@ dependencies {
     compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.1.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.1.RELEASE'
 
+    //add!
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.1.RELEASE'
+    
+    
+    //no add!
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+    runtime('mysql:mysql-connector-java')
     //session
     //compile group: 'redis.clients', name: 'jedis', version: '3.0.1'
     //compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: '2.1.2.RELEASE'
