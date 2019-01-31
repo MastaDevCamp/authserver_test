@@ -20,12 +20,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/**").authorizeRequests()
                 .antMatchers("/", "/login/**", "/webjars/**", "/error**").permitAll()
+                .antMatchers("/member/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest().authenticated()
+                //.and().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/auth/me"))
             .and()
                 .logout().logoutSuccessUrl("/").permitAll()
             .and()
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+            .and()
+
                 .addFilterBefore(ssoFilter, BasicAuthenticationFilter.class);
     }
 

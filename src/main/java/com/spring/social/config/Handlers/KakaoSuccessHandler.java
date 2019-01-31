@@ -1,4 +1,4 @@
-package com.spring.social.config;
+package com.spring.social.config.Handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.social.membership.entity.SocialUser;
@@ -14,19 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * 8. update LoginSuccess Handler.
- * this class is updated for save user data to mysql.
- * to save user service, use UserService. (i'm confused using userService vs using userRepositor & userRoleRepository)
- */
-
 @Component
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class KakaoSuccessHandler implements AuthenticationSuccessHandler {
     private HttpSession httpSession;
     private ObjectMapper objectMapper;
     private UserService userService;
 
-    public LoginSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, UserService userService) {
+    public KakaoSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, UserService userService) {
         this.httpSession = httpSession;
         this.objectMapper = objectMapper;
         this.userService = userService;
@@ -34,9 +28,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("hello~");
         OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
+        Object obj = ((OAuth2Authentication) authentication).getOAuth2Request();
         SocialUser socialUser = objectMapper.convertValue(oAuth2Authentication.getUserAuthentication().getDetails(),SocialUser.class);
+        socialUser.setProvider("kakao");
         userService.getOrSave(socialUser);
         response.sendRedirect("/auth/me");
     }

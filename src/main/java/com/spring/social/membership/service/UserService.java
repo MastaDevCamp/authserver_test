@@ -6,10 +6,6 @@ import com.spring.social.membership.entity.UserRole;
 import com.spring.social.membership.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-/**
- * 7. add UserService.
- * later, add @Transactional.
- */
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -20,7 +16,7 @@ public class UserService {
 
     //@Transactional
     public User getOrSave(SocialUser socialUser){
-        User saveUser = userRepository.findByEmail(socialUser.getEmail());
+        User saveUser = userRepository.findBySocial_id(socialUser.getSocial_id());
         if(saveUser==null){
             User newUser = socialUser.toEntity();
             newUser.addRole(new UserRole("ROLE_USER"));

@@ -5,11 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-/**
- * 3. add UserRole Map.
- * this is my jpa model for mysql.
- * this class means mapping user & user_Roles.
- */
+
 @NoArgsConstructor
 @Getter
 @Entity

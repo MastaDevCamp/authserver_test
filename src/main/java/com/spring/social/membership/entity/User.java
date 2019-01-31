@@ -6,11 +6,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 1. add User Entity.
- * this is Jpa Entity for Mysql.
- * this class only contains Social Users.
- */
 @Getter
 @NoArgsConstructor
 @Entity
@@ -19,19 +14,17 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    private String provider;
+    private String social_id;
 
-    private String name;
-    private String email;
-    private String imageUrl;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval=true)
     private List<UserRoleMap> userRoles = new ArrayList<>();
 
     @Builder
-    public User(String name, String email, String imageUrl, List<UserRoleMap> userRoles) {
-        this.name = name;
-        this.email = email;
-        this.imageUrl = imageUrl;
+    public User(String social_id, String provider, List<UserRoleMap> userRoles) {
+        this.provider=provider;
+        this.social_id=social_id;
         this.userRoles = userRoles;
     }
 

@@ -1,6 +1,9 @@
 package com.spring.social.config;
 
 import com.spring.social.ClientResources;
+import com.spring.social.config.Handlers.FaceBookLoginSuccessHandler;
+import com.spring.social.config.Handlers.GoogleSuccessHandler;
+import com.spring.social.config.Handlers.KakaoSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
@@ -28,7 +31,13 @@ public class OAuth2Config {
     OAuth2ClientContext oauth2ClientContext;
 
     @Autowired
-    LoginSuccessHandler loginSuccessHandler;
+    FaceBookLoginSuccessHandler faceBookLoginSuccessHandler;
+
+    @Autowired
+    GoogleSuccessHandler googleSuccessHandler;
+
+    @Autowired
+    KakaoSuccessHandler kakaoSuccessHandler;
 
     @Bean
     @ConfigurationProperties("github")
@@ -58,15 +67,22 @@ public class OAuth2Config {
                 client.getResource().getUserInfoUri(), client.getClient().getClientId());
         tokenServices.setRestTemplate(template);
         filter.setTokenServices(tokenServices);
-        filter.setAuthenticationSuccessHandler(loginSuccessHandler);
+        if(path.equals("/login/facebook"))
+            filter.setAuthenticationSuccessHandler(faceBookLoginSuccessHandler);
+        else if (path.equals("/login/google"))
+            filter.setAuthenticationSuccessHandler(googleSuccessHandler);
+        else
+            filter.setAuthenticationSuccessHandler(kakaoSuccessHandler);
         return filter;
     }
+
 
     @Bean
     public Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
         filters.add(ssoFilter(facebook(), "/login/facebook"));
+        //filters.add(ssoFilter(facebook(), new FacebookOAuth2ClientAuthenticationProcessingFilter(socialService)));
         filters.add(ssoFilter(github(), "/login/github"));
         filters.add(ssoFilter(google(), "/login/google"));
         filters.add(ssoFilter(kakao(), "/login/kakao"));
@@ -82,5 +98,13 @@ public class OAuth2Config {
         return registration;
     }
 
-
+//    private Filter ssoFilter(ClientResources clientResources, OAuth2ClientAuthenticationProcessingFilter filter){
+//        OAuth2RestTemplate template = new OAuth2RestTemplate(clientResources.getClient(), oauth2ClientContext);
+//        filter.setRestTemplate(template);
+//        UserInfoTokenServices tokenServices = new UserInfoTokenServices(
+//                clientResources.getResource().getUserInfoUri(), clientResources.getClient().getClientId());
+//        tokenServices.setRestTemplate(template);
+//        filter.setTokenServices(tokenServices);
+//        return filter;
+//    }
 }

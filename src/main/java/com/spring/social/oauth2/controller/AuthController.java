@@ -1,4 +1,4 @@
-package com.spring.social.controller;
+package com.spring.social.oauth2.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +11,7 @@ public class AuthController {
 
     @RequestMapping("/me")
     public Principal user(Principal principal) {
+
         return principal;
     }
 

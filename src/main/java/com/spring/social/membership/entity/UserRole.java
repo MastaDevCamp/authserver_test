@@ -7,11 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/**
- * 2. add User Role.
- * this is Jpa Entity.
- * this means user Authorities.
- */
+
 @Getter
 @NoArgsConstructor
 @Entity
