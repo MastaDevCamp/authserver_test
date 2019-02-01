@@ -1,7 +1,8 @@
 package com.spring.social.config.Handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.social.membership.entity.SocialUser;
+import com.spring.social.membership.dto.SocialUserForm;
+import com.spring.social.membership.service.SocialService;
 import com.spring.social.membership.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -18,21 +19,21 @@ import java.io.IOException;
 public class KakaoSuccessHandler implements AuthenticationSuccessHandler {
     private HttpSession httpSession;
     private ObjectMapper objectMapper;
-    private UserService userService;
+    private SocialService socialService;
 
-    public KakaoSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, UserService userService) {
+    public KakaoSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, SocialService socialService) {
         this.httpSession = httpSession;
         this.objectMapper = objectMapper;
-        this.userService = userService;
+        this.socialService = socialService;
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
         Object obj = ((OAuth2Authentication) authentication).getOAuth2Request();
-        SocialUser socialUser = objectMapper.convertValue(oAuth2Authentication.getUserAuthentication().getDetails(),SocialUser.class);
-        socialUser.setProvider("kakao");
-        userService.getOrSave(socialUser);
+        SocialUserForm socialUserForm = objectMapper.convertValue(oAuth2Authentication.getUserAuthentication().getDetails(), SocialUserForm.class);
+        socialUserForm.setProvider("kakao");
+        socialService.getOrSave(socialUserForm);
         response.sendRedirect("/auth/me");
     }
 

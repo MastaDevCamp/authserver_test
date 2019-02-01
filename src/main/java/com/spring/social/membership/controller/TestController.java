@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/member")
-public class MembershipController {
+@RequestMapping(value = "/test")
+public class TestController {
 
     @Autowired
     NonSocialService nonSocialService;
@@ -18,15 +18,5 @@ public class MembershipController {
     @GetMapping("/test")
     public String test(){
         return "hello";
-    }
-
-    //user 회원가입 만들기....
-    @GetMapping("/{id}/{pw}")
-    public void Logintest(@PathVariable String id, @PathVariable String pw){
-        NonSocialUser nonSocialUser = NonSocialUser.builder()
-                .password(pw)
-                .username(id)
-                .build();
-        nonSocialService.createUser(nonSocialUser);
     }
 }

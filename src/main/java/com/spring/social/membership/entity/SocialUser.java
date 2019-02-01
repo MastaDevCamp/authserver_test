@@ -1,39 +1,27 @@
 package com.spring.social.membership.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.io.Serializable;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
-@NoArgsConstructor
+@Entity
+@DiscriminatorValue("social")
 @Getter
-@Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class SocialUser implements Serializable {
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+public class SocialUser extends User{
 
-    @JsonProperty("id")
-    private String social_id;
-    @JsonProperty("provider")
+    private String socialId;
     private String provider;
+    private String tokenValue;
 
     @Builder
-    public SocialUser(String social_id, String provider) {
-        this.social_id = social_id;
+    public SocialUser(String socialId, String provider, String tokenValue) {
+        this.socialId = socialId;
         this.provider = provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
-
-    public User toEntity(){
-        return User.builder()
-                .provider(provider)
-                .social_id(social_id)
-                .build();
+        this.tokenValue = tokenValue;
     }
 }
