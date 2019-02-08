@@ -3,8 +3,6 @@ package com.spring.social.membership.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring.social.membership.entity.SocialUser;
-import com.spring.social.membership.entity.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

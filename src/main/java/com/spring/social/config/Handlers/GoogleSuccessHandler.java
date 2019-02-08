@@ -3,7 +3,6 @@ package com.spring.social.config.Handlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.social.membership.dto.SocialUserForm;
 import com.spring.social.membership.service.SocialService;
-import com.spring.social.membership.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

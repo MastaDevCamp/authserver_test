@@ -1,10 +1,8 @@
 package com.spring.social.membership.controller;
 
-import com.spring.social.membership.entity.NonSocialUser;
 import com.spring.social.membership.service.NonSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

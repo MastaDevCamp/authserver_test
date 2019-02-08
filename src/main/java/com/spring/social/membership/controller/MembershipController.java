@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/member")
 public class MembershipController {
 
+
     @Autowired
     NonSocialService nonSocialService;
 
@@ -29,4 +30,9 @@ public class MembershipController {
                 .build();
         nonSocialService.createUser(nonSocialUser);
     }
+
+//    @PostMapping("/login")
+//    public User login(@RequestBody LoginReq loginReq){
+//        Authentication authentication = authenticationManager.
+//    }
 }

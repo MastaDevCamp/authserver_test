@@ -40,12 +40,6 @@ public class OAuth2Config {
     KakaoSuccessHandler kakaoSuccessHandler;
 
     @Bean
-    @ConfigurationProperties("github")
-    public ClientResources github() {
-        return new ClientResources();
-    }
-
-    @Bean
     @ConfigurationProperties("facebook")
     public ClientResources facebook() {
         return new ClientResources();
@@ -82,8 +76,6 @@ public class OAuth2Config {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
         filters.add(ssoFilter(facebook(), "/login/facebook"));
-        //filters.add(ssoFilter(facebook(), new FacebookOAuth2ClientAuthenticationProcessingFilter(socialService)));
-        filters.add(ssoFilter(github(), "/login/github"));
         filters.add(ssoFilter(google(), "/login/google"));
         filters.add(ssoFilter(kakao(), "/login/kakao"));
         filter.setFilters(filters);
